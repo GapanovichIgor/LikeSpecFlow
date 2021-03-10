@@ -1,13 +1,6 @@
 ﻿namespace LikeSpecFlowFs
 
-type TextColor =
-    | Plain
-    | Parameter
+type TestExecutionContext =
+    { log : string -> unit }
 
-type ColoredText = TextColor * string
-
-type PrettyPrint = ColoredText list
-
-type TestStep =
-    abstract PrettyPrint : PrettyPrint
-
+type TestStep = TestExecutionContext -> unit

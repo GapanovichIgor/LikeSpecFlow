@@ -1,26 +1,23 @@
 ﻿module LikeSpecFlowFs.Test
 
 open System
+open FSharp.Quotations
 open LikeSpecFlowFs.TestFragment
 
 type Test =
     { name : string
-      steps : TestStep list }
-
-type TestFragmentInclusion = private TestFragmentInclusion of TestFragment
-
-let includeFragment = TestFragmentInclusion
+      steps : (PrettyPrint * TestStep) list }
 
 type TestBuilder(name) =
     member _.Zero() =
         { name = name
           steps = [] }
 
-    member _.Yield(step : TestStep) =
+    member _.Yield([<ReflectedDefinition>] step : Expr<TestStep>) =
         { name = name
-          steps = [step] }
+          steps = [TestBuilderCommon.createStepFromExpr step] }
 
-    member _.Yield(TestFragmentInclusion fragment) =
+    member _.Yield(fragment : TestFragment) =
         { name = name
           steps = fragment.steps }
 
@@ -33,6 +30,10 @@ type TestBuilder(name) =
     member _.Delay(f) = f()
 
 let test name = TestBuilder(name)
+
+let run context test =
+    for (_, f) in test.steps do
+        f context
 
 let prettyPrint test =
     let consoleColorBefore = Console.ForegroundColor
@@ -47,10 +48,10 @@ let prettyPrint test =
 
     let mutable stepNumber = 1
 
-    for step in test.steps do
+    for (prettyPrint, _) in test.steps do
         printCol Plain $"Step {stepNumber}: "
 
-        for (color, text) in step.PrettyPrint do
+        for (color, text) in prettyPrint do
             printCol color text
 
         Console.WriteLine()
