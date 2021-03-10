@@ -46,7 +46,10 @@ let loginSuccessTest =
 
 [<EntryPoint>]
 let main argv =
-    prettyPrint loginSuccessTest
+    let style =
+        { plainTextColor = ConsoleColor.Yellow
+          parameterColor = ConsoleColor.Green }
+    prettyPrint style loginSuccessTest
 
     let executionContext = { log = Console.WriteLine }
     run executionContext loginSuccessTest

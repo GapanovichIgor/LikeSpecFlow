@@ -35,14 +35,18 @@ let run context test =
     for (_, f) in test.steps do
         f context
 
-let prettyPrint test =
+type PrintStyle =
+    { plainTextColor : ConsoleColor
+      parameterColor : ConsoleColor }
+
+let prettyPrint style test =
     let consoleColorBefore = Console.ForegroundColor
 
     let printCol color (text : string) =
         let consoleColor =
             match color with
-            | Plain -> ConsoleColor.Yellow
-            | Parameter -> ConsoleColor.Green
+            | Plain -> style.plainTextColor
+            | Parameter -> style.parameterColor
         Console.ForegroundColor <- consoleColor
         Console.Write(text)
 
