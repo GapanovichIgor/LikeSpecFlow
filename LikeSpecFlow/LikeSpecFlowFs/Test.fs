@@ -7,6 +7,10 @@ type Test =
     { name : string
       steps : TestStep list }
 
+type TestFragmentInclusion = private TestFragmentInclusion of TestFragment
+
+let includeFragment = TestFragmentInclusion
+
 type TestBuilder(name) =
     member _.Zero() =
         { name = name
@@ -16,7 +20,7 @@ type TestBuilder(name) =
         { name = name
           steps = [step] }
 
-    member _.Yield(fragment : TestFragment) =
+    member _.Yield(TestFragmentInclusion fragment) =
         { name = name
           steps = fragment.steps }
 

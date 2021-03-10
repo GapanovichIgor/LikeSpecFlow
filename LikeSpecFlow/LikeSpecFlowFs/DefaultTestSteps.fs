@@ -1,44 +1,27 @@
 ﻿module LikeSpecFlowFs.DefaultTestSteps
 
-let ``initialize Selenium with parameter`` param =
-    { new TestStep with
-        member _.PrettyPrint =
-            [ Plain, "Initialize Selenium With "
-              Parameter, param
-              Plain, " Parameter" ] }
+open LikeSpecFlowFs.AutoPrettyPrint
 
-let ``open page`` (url : string) =
+let rec ``Initialize Selenium with <parameter> parameter`` param =
     { new TestStep with
-        member _.PrettyPrint =
-            [ Plain, "Open Page "
-              Parameter, url ] }
+        member _.PrettyPrint = autoPrettyPrint (nameof ``Initialize Selenium with <parameter> parameter``) [param] }
 
-let ``wait for element to be clickable`` element =
+let rec ``Open page <url>`` (url : string) =
     { new TestStep with
-        member _.PrettyPrint =
-            [ Plain, "Wait For Element "
-              Parameter, element
-              Plain, " To Be Clickable" ] }
+        member _.PrettyPrint = autoPrettyPrint (nameof ``Open page <url>``) [url] }
 
-
-let ``input text into control`` control text =
+let rec ``Wait for element <selector> to be clickable`` element =
     { new TestStep with
-        member _.PrettyPrint =
-            [ Plain, "Input "
-              Parameter, text
-              Plain, " Into Control "
-              Parameter, control ] }
+        member _.PrettyPrint = autoPrettyPrint (nameof ``Wait for element <selector> to be clickable``) [element] }
 
-let ``click on control`` control =
+let rec ``Input <text> into <selector> control`` control text =
     { new TestStep with
-        member _.PrettyPrint =
-            [ Plain, "Click On "
-              Parameter, control
-              Plain, " Control" ] }
+        member _.PrettyPrint = autoPrettyPrint (nameof ``Input <text> into <selector> control``) [control; text] }
 
-let ``assert element exists`` element =
+let rec ``Click on <selector> control`` control =
     { new TestStep with
-        member _.PrettyPrint =
-            [ Plain, "Assert Element "
-              Parameter, element
-              Plain, " Exists" ]}
+        member _.PrettyPrint = autoPrettyPrint (nameof ``Click on <selector> control``) [control] }
+
+let rec ``Assert element <selector> exists`` element =
+    { new TestStep with
+        member _.PrettyPrint = autoPrettyPrint (nameof ``Assert element <selector> exists``) [element] }

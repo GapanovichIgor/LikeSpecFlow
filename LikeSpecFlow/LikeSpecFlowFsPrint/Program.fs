@@ -4,21 +4,24 @@ open LikeSpecFlowFs.DefaultTestSteps
 
 let ``fill login form`` name password =
     testFragment {
-        ``input text into control`` "Name" name
-        ``input text into control`` "Password" password
+        ``Input <text> into <selector> control`` "Name" name
+        ``Input <text> into <selector> control`` "Password" password
     }
 
 let loginSuccessTest =
     test "Login test" {
-        ``initialize Selenium with parameter`` "/nocache"
+        ``Initialize Selenium with <parameter> parameter`` "/nocache"
 
-        ``open page`` "mail.ru"
-        ``wait for element to be clickable`` "loginButton"
-        ``fill login form`` "jon@mail.ru" "123"
+        ``Open page <url>`` "mail.ru"
+        ``Wait for element <selector> to be clickable`` "loginButton"
 
-        ``click on control`` "Login"
+        includeFragment (
+            ``fill login form`` "jon@mail.ru" "123"
+        )
 
-        ``assert element exists`` "logo"
+        ``Click on <selector> control`` "Login"
+
+        ``Assert element <selector> exists`` "logo"
     }
 
 [<EntryPoint>]

@@ -6,6 +6,7 @@
 
     <ItemGroup>
         <Compile Include="TestStep.fs" />
+        <Compile Include="AutoPrettyPrint.fs" />
         <Compile Include="DefaultTestSteps.fs" />
         <Compile Include="TestFragment.fs" />
         <Compile Include="Test.fs" />

@@ -8,7 +8,7 @@ open Xunit
 let loginSuccessTest () =
     let test =
         test "Login test" {
-            ``initialize Selenium with parameter`` "/nocache"
+            ``Initialize Selenium with <parameter> parameter`` "/nocache"
         }
 
     prettyPrint test
