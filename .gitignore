@@ -8,3 +8,4 @@
 .vs/
 .idea/
 *.binlog
+*.DotSettings.user
